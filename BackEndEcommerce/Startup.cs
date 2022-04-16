@@ -22,13 +22,23 @@ namespace BackEndEcommerce
         {
             Configuration = configuration;
         }
-
+        readonly string CorsPolicy = "_corsPolicy";
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: CorsPolicy,
+                                  builder =>
+                                  {
+                                      builder.AllowAnyOrigin()
+                                       .AllowAnyMethod()
+                                       .AllowAnyHeader();
+                                  });
+            });
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddDbContext<eCommerceContext>();
 
@@ -43,7 +53,7 @@ namespace BackEndEcommerce
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors(CorsPolicy);
             app.UseRouting();
 
             app.UseAuthorization();

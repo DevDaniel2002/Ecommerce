@@ -26,6 +26,11 @@ namespace BackEndEcommerce.Data
             return entities.Find(keyValues: id);
         }
 
+        public T Get(string id)
+        {
+            return entities.Find(keyValues: id);
+        }
+
         public void Insert(T entity)
         {
             entities.Add(entity);

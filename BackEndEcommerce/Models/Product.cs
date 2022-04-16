@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -7,6 +8,7 @@ namespace BackEndEcommerce.Models
 {
     public partial class Product
     {
+        [Key]
         public string Id { get; set; }
         public string Name { get; set; }
         public decimal? Price { get; set; }

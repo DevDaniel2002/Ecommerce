@@ -2,6 +2,7 @@
 using BackEndEcommerce.Models.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace BackEndEcommerce.Controllers
 {
@@ -12,5 +13,28 @@ namespace BackEndEcommerce.Controllers
         public ProductsController(eCommerceContext _context, IRepository<Product> _repository) : base(_context, _repository)
         {
         }
+
+        // DELETE: api/Base/5
+        [HttpDelete("{Id}")]
+        public override ActionResult<ApiResponses> DeleteEntity(int Id)
+        {
+            ApiResponses response = new ApiResponses()
+            {
+                Success = true,
+            };
+
+            try
+            {
+                repository.Delete(repository.Get(Id.ToString()));
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message.ToString();
+                response.Success = false;
+            }
+
+            return response;
+        }
+
     }
 }

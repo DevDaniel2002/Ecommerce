@@ -4,14 +4,16 @@ using BackEndEcommerce.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackEndEcommerce.Migrations
 {
     [DbContext(typeof(eCommerceContext))]
-    partial class eCommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20220416180237_add PKs")]
+    partial class addPKs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,15 +23,15 @@ namespace BackEndEcommerce.Migrations
 
             modelBuilder.Entity("BackEndEcommerce.Models.Product", b =>
                 {
+                    b.Property<string>("Description")
+                        .HasMaxLength(10)
+                        .HasColumnType("nchar(10)")
+                        .IsFixedLength(true);
+
                     b.Property<string>("Id")
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(100)
-                        .HasColumnType("nchar(100)")
-                        .IsFixedLength(true);
 
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
@@ -47,8 +49,6 @@ namespace BackEndEcommerce.Migrations
 
                     b.Property<bool?>("State")
                         .HasColumnType("bit");
-
-                    b.HasKey("Id");
 
                     b.ToTable("Products");
                 });
