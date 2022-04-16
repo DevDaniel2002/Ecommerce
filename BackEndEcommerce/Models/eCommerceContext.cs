@@ -25,7 +25,7 @@ namespace BackEndEcommerce.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=SRSOAR\\SQLEXPRESS;Database=eCommerce;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-L9HO0O3\\SQLEXPRESS;Database=eCommerce;Trusted_Connection=True;");
             }
         }
 
@@ -33,15 +33,14 @@ namespace BackEndEcommerce.Models
         {
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.Property(e => e.Description)
-                    .HasMaxLength(10)
+                    .HasMaxLength(100)
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Id)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)

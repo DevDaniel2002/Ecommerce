@@ -68,28 +68,25 @@ namespace BackEndEcommerce.Controllers
         }
 
         [HttpPut]
-        public virtual ActionResult<ApiResponses> PutEntity([FromQuery] int Id)
+        public virtual ActionResult<ApiResponses> PutEntity([FromBody] T entity)
         {
             ApiResponses response = new ApiResponses()
             {
                 Success = true,
             };
 
-            T request = null;
-
             try
             {
-                if (repository.Get(Id) == null)
+                if (entity == null)
                 {
                     response.Success = false;
                     return response;
                 }
                 else
                 {
-                    request = repository.Get(Id);
+                    repository.Update(entity);
                 }
-      
-                repository.Update(request);
+
             }
             catch (DbUpdateConcurrencyException ex)
             {
@@ -102,7 +99,7 @@ namespace BackEndEcommerce.Controllers
 
         // POST: api/Base
         [HttpPost]
-        public virtual ActionResult<ApiResponses> PostEntity(T request)
+        public virtual ActionResult<ApiResponses> PostEntity([FromBody] T request)
         {
             ApiResponses response = new ApiResponses()
             {
@@ -121,9 +118,10 @@ namespace BackEndEcommerce.Controllers
 
             return response;
         }
+        
         // DELETE: api/Base/5
-        [HttpDelete]
-        public virtual ActionResult<ApiResponses> DeleteEntity([FromQuery] int Id)
+        [HttpDelete("{Id}")]
+        public virtual ActionResult<ApiResponses> DeleteEntity(int Id)
         {
             ApiResponses response = new ApiResponses()
             {
@@ -132,12 +130,6 @@ namespace BackEndEcommerce.Controllers
 
             try
             {
-                if (repository.Get(Id) == null)
-                {
-                    response.Success = false;
-                    return response;
-                }
-
                 repository.Delete(repository.Get(Id));
             }
             catch (Exception ex)
